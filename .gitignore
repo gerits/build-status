@@ -30,3 +30,7 @@ proguard/
 
 # Android Studio captures folder
 captures/
+
+# Android Studio Configuration folder/files
+*.iml
+.idea/

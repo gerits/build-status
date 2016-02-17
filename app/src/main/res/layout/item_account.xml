@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/account_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_vertical"
+        android:layout_toStartOf="@+id/delete_account"
+        android:drawablePadding="8dp"
+        android:drawableStart="@drawable/ic_account_travisci"
+        android:gravity="center_vertical"
+        tools:text="Username" />
+
+    <ImageButton
+        android:id="@id/delete_account"
+        style="@style/Base.Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:contentDescription="@string/account_delete"
+        android:src="@drawable/ic_delete_24dp" />
+
+</RelativeLayout>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/colorLogin</color>
+    <color name="colorPrimaryDark">@color/colorLoginDark</color>
+    <color name="colorAccent">#666666</color>
+
+    <!--login-->
+    <color name="colorLogin">#40A3AD</color>
+    <color name="colorLoginDark">#388E97</color>
+
+    <!--failing-->
+    <color name="colorFailing">#D94341</color>
+    <color name="colorFailingDark">#D12C2A</color>
+
+    <!--building-->
+    <color name="colorBuilding">#E5DA3F</color>
+    <color name="colorBuildingDark">#E1D524</color>
+
+    <!--passing-->
+    <color name="colorPassing">#44A662</color>
+    <color name="colorPassingDark">#3B9055</color>
+
+    <!--unknown-->
+    <color name="colorUnknown">#666666</color>
+    <color name="colorUnknownDark">#575757</color>
+</resources>

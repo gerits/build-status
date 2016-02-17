@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Build Status</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <string name="action_add_account">Add account</string>
+    <string name="account_message">Login to Travis-CI with your github account</string>
+    <string name="account_username">Username</string>
+    <string name="account_password">Password</string>
+    <string name="account_delete">Delete Account</string>
+
+    <!-- Error handling -->
+    <string name="error_unknown">Unknown error occurred</string>
+
+    <!-- Build status item -->
+    <string name="build_duration">Duration: %1$s</string>
+    <string name="build_finished">Finished: %1$s</string>
+
+    <string name="no_account_error">You did not add any accounts yet. Please go to settings to add an accounts.</string>
+    <string name="no_projects_found">No project found</string>
+    <string name="refresh">Refresh</string>
+    <string name="loading">Loading</string>
+
+</resources>
