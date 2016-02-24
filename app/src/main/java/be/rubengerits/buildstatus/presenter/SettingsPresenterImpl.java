@@ -8,25 +8,29 @@ import com.squareup.sqlbrite.SqlBrite;
 import java.util.ArrayList;
 import java.util.List;
 
-import be.rubengerits.buildstatus.model.database.DataBaseHelper;
+import javax.inject.Inject;
+
+import be.rubengerits.buildstatus.model.data.AccessToken;
 import be.rubengerits.buildstatus.model.data.Account;
 import be.rubengerits.buildstatus.model.data.AccountType;
-import be.rubengerits.buildstatus.model.network.BuildStatusServiceImpl;
-import be.rubengerits.buildstatus.model.data.AccessToken;
+import be.rubengerits.buildstatus.model.database.DataBaseHelper;
+import be.rubengerits.buildstatus.model.network.BuildStatusService;
 import be.rubengerits.buildstatus.view.SettingsView;
+import dagger.Lazy;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class SettingsPresenterImpl implements SettingsPresenter {
 
-    private final DataBaseHelper dataBaseHelper;
-    private final BuildStatusServiceImpl buildStatusService;
+    @Inject
+    DataBaseHelper dataBaseHelper;
+    @Inject
+    Lazy<BuildStatusService> buildStatusService;
+
     private SettingsView view;
 
     public SettingsPresenterImpl(SettingsView view, Context context) {
         this.view = view;
-        dataBaseHelper = new DataBaseHelper(context);
-        buildStatusService = new BuildStatusServiceImpl();
     }
 
     @Override
@@ -58,7 +62,7 @@ public class SettingsPresenterImpl implements SettingsPresenter {
 
     @Override
     public void connectUser(final AccountType type, final String username, final String password) {
-        buildStatusService.authenticate(username, password)
+        buildStatusService.get().authenticate(username, password)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .onErrorReturn(throwable -> null)
@@ -78,4 +82,5 @@ public class SettingsPresenterImpl implements SettingsPresenter {
             loadAllAccounts();
         }
     }
+
 }

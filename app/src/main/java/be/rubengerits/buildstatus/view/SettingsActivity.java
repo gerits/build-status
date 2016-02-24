@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import be.rubengerits.buildstatus.BuildStatusApplication;
 import be.rubengerits.buildstatus.R;
 import be.rubengerits.buildstatus.model.data.Account;
 import be.rubengerits.buildstatus.model.data.AccountType;
@@ -23,19 +24,20 @@ import be.rubengerits.buildstatus.view.widget.EmptyRecyclerView;
 
 public class SettingsActivity extends AppCompatActivity implements SettingsView {
 
-    private SettingsPresenter presenter;
-
     EmptyRecyclerView accountList;
+    private SettingsPresenterImpl presenter;
     private AccountAdapter accountAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setupActionBar();
 
         setContentView(R.layout.activity_settings);
 
         presenter = new SettingsPresenterImpl(this, this);
+        ((BuildStatusApplication) getApplication()).getBuildStatusComponent().inject(presenter);
 
         accountList = (EmptyRecyclerView) findViewById(R.id.account_list);
 
@@ -80,15 +82,14 @@ public class SettingsActivity extends AppCompatActivity implements SettingsView 
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         final View dialogView = getLayoutInflater().inflate(R.layout.dialog_add_account, null);
 
-        View username = dialogView.findViewById(R.id.account_username);
+        EditText username = (EditText) dialogView.findViewById(R.id.account_username);
         username.requestFocus();
 
         dialog.setTitle(R.string.action_add_account);
         dialog.setPositiveButton(android.R.string.ok, (dialog1, which) -> {
-            EditText username1 = (EditText) dialogView.findViewById(R.id.account_username);
             EditText password = (EditText) dialogView.findViewById(R.id.account_password);
 
-            presenter.connectUser(AccountType.TRAVIS_CI, username1.getText().toString(), password.getText().toString());
+            presenter.connectUser(AccountType.TRAVIS_CI, username.getText().toString(), password.getText().toString());
 
             dialog1.dismiss();
         });
@@ -105,5 +106,9 @@ public class SettingsActivity extends AppCompatActivity implements SettingsView 
     @Override
     public void showContent(List<Account> accounts) {
         accountAdapter.setAccounts(accounts);
+    }
+
+    public SettingsPresenterImpl getPresenter() {
+        return presenter;
     }
 }

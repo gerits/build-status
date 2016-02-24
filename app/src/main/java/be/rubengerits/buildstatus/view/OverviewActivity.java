@@ -17,6 +17,7 @@ import net.frakbot.jumpingbeans.JumpingBeans;
 import java.util.Set;
 import java.util.TreeSet;
 
+import be.rubengerits.buildstatus.BuildStatusApplication;
 import be.rubengerits.buildstatus.R;
 import be.rubengerits.buildstatus.model.data.BuildStatus;
 import be.rubengerits.buildstatus.model.data.Repository;
@@ -39,7 +40,8 @@ public class OverviewActivity extends AppCompatActivity implements OverviewView 
 
         buildList = (EmptyRecyclerView) findViewById(R.id.build_list);
 
-        presenter = new OverviewPresenterImpl(this, this);
+        presenter = new OverviewPresenterImpl(this);
+        ((BuildStatusApplication) getApplication()).getBuildStatusComponent().inject(presenter);
 
         repositoriesAdapter = new RepositoriesAdapter();
         buildList.setAdapter(repositoriesAdapter);

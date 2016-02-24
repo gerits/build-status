@@ -1,6 +1,5 @@
 package be.rubengerits.buildstatus.presenter;
 
-import android.content.Context;
 import android.database.Cursor;
 import android.support.annotation.NonNull;
 
@@ -13,12 +12,14 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import be.rubengerits.buildstatus.model.database.DataBaseHelper;
+import javax.inject.Inject;
+
 import be.rubengerits.buildstatus.model.data.Account;
-import be.rubengerits.buildstatus.model.network.BuildStatusServiceImpl;
 import be.rubengerits.buildstatus.model.data.BuildStatus;
 import be.rubengerits.buildstatus.model.data.Repositories;
 import be.rubengerits.buildstatus.model.data.Repository;
+import be.rubengerits.buildstatus.model.database.DataBaseHelper;
+import be.rubengerits.buildstatus.model.network.BuildStatusService;
 import be.rubengerits.buildstatus.view.OverviewView;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -26,14 +27,14 @@ import rx.schedulers.Schedulers;
 
 public class OverviewPresenterImpl implements OverviewPresenter {
 
-    private final BuildStatusServiceImpl buildStatusService;
-    private final DataBaseHelper dataBaseHelper;
+    @Inject
+    BuildStatusService buildStatusService;
+    @Inject
+    DataBaseHelper dataBaseHelper;
     private OverviewView view;
 
-    public OverviewPresenterImpl(OverviewView view, Context context) {
+    public OverviewPresenterImpl(OverviewView view) {
         this.view = view;
-        dataBaseHelper = new DataBaseHelper(context);
-        buildStatusService = new BuildStatusServiceImpl();
     }
 
     public void updateRepositories() {

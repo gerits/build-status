@@ -3,29 +3,38 @@ package be.rubengerits.buildstatus.model.network;
 
 import android.util.Base64;
 
-import be.rubengerits.buildstatus.model.data.Account;
+import javax.inject.Inject;
+
 import be.rubengerits.buildstatus.model.data.AccessToken;
+import be.rubengerits.buildstatus.model.data.Account;
 import be.rubengerits.buildstatus.model.data.Repositories;
 import retrofit2.Retrofit;
 import rx.Observable;
 
-public class BuildStatusServiceImpl {
-    public static final String API_URL = "https://buildstatus-gerits.rhcloud.com";
+public class BuildStatusServiceImpl implements BuildStatusService {
+    public final String url;
 
+    @Inject
+    public BuildStatusServiceImpl(String url) {
+        this.url = url;
+    }
+
+    @Override
     public Observable<AccessToken> authenticate(String username, String password) {
-        Retrofit retrofit = RestUtils.createRetrofit(API_URL);
+        Retrofit retrofit = RestUtils.createRetrofit(url);
 
-        BuildStatusService service = retrofit.create(BuildStatusService.class);
+        RetrofitBuildStatusService service = retrofit.create(RetrofitBuildStatusService.class);
 
         String basicAuth = generateBasicAuth(username, password);
 
         return service.authenticate(basicAuth);
     }
 
+    @Override
     public Observable<Repositories> getRepositories(Account account) {
-        Retrofit retrofit = RestUtils.createRetrofit(API_URL);
+        Retrofit retrofit = RestUtils.createRetrofit(url);
 
-        BuildStatusService service = retrofit.create(BuildStatusService.class);
+        RetrofitBuildStatusService service = retrofit.create(RetrofitBuildStatusService.class);
 
         return service.getRepositories("token " + account.getToken());
     }
