@@ -2,23 +2,21 @@
 
 buildscript {
     repositories {
-        jcenter()
-        mavenCentral()
+        maven { url 'http://repo.rubengerits.be/artifactory/jcenter' }
+        maven { url 'http://repo.rubengerits.be/artifactory/mavencentral' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.0.0-beta5'
+        classpath 'com.android.tools.build:gradle:1.5.0'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
-        classpath 'me.tatarka:gradle-retrolambda:3.2.5'
+        classpath 'me.tatarka:gradle-retrolambda:3.3.0-beta4'
     }
 }
 
 allprojects {
     repositories {
-        jcenter()
-        mavenCentral()
-        maven{
-            url 'https://oss.sonatype.org/content/repositories/snapshots/'
-        }
+        maven { url 'http://repo.rubengerits.be/artifactory/build-status' }
+        maven { url 'http://repo.rubengerits.be/artifactory/jcenter' }
+        maven { url 'http://repo.rubengerits.be/artifactory/mavencentral' }
     }
 }
 

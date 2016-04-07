@@ -2,7 +2,7 @@ package be.rubengerits.buildstatus.view;
 
 import java.util.Set;
 
-import be.rubengerits.buildstatus.model.data.Repository;
+import be.rubengerits.buildstatus.api.global.Repository;
 
 public interface OverviewView extends ErrorHandlerView {
     void startLoading();

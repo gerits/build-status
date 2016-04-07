@@ -1,5 +1,6 @@
 package be.rubengerits.buildstatus.model.database;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.util.Log;
 
@@ -9,8 +10,8 @@ import com.squareup.sqlbrite.SqlBrite;
 
 import javax.inject.Inject;
 
+import be.rubengerits.buildstatus.api.global.Repository;
 import be.rubengerits.buildstatus.model.data.Account;
-import be.rubengerits.buildstatus.model.data.Repository;
 
 public class DataBaseHelperImpl implements DataBaseHelper {
 
@@ -27,6 +28,15 @@ public class DataBaseHelperImpl implements DataBaseHelper {
         BriteDatabase db = sqlBrite.wrapDatabaseHelper(new BuildStatusOpenHelper(context));
 
         return db.createQuery(BuildStatusOpenHelper.TABLE_ACCOUNTS, "SELECT * FROM " + BuildStatusOpenHelper.TABLE_ACCOUNTS);
+    }
+
+
+    @Override
+    public boolean hasAccounts() {
+        SqlBrite sqlBrite = SqlBrite.create();
+        BriteDatabase db = sqlBrite.wrapDatabaseHelper(new BuildStatusOpenHelper(context));
+
+        return db.query("SELECT 1 FROM " + BuildStatusOpenHelper.TABLE_ACCOUNTS).getCount() > 0;
     }
 
     @Override
@@ -56,15 +66,27 @@ public class DataBaseHelperImpl implements DataBaseHelper {
         BriteDatabase db = sqlBrite.wrapDatabaseHelper(new BuildStatusOpenHelper(context));
 
         try (BriteDatabase.Transaction transaction = db.newTransaction()) {
-            int update = db.update(BuildStatusOpenHelper.TABLE_REPOSITORIES, repository.toDatabase(), "name LIKE '" + repository.getName() + "'");
+            int update = db.update(BuildStatusOpenHelper.TABLE_REPOSITORIES, toDatabase(repository), "name LIKE '" + repository.getName() + "'");
             if (update == 0) {
-                db.insert(BuildStatusOpenHelper.TABLE_REPOSITORIES, repository.toDatabase());
+                db.insert(BuildStatusOpenHelper.TABLE_REPOSITORIES, toDatabase(repository));
             }
             transaction.markSuccessful();
         } catch (Exception e) {
             Log.e("dbfail", e.getMessage(), e);
             throw e;
         }
+    }
+
+    public ContentValues toDatabase(Repository repo) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("id", repo.getId());
+        contentValues.put("name", repo.getName());
+        contentValues.put("description", repo.getDescription());
+        contentValues.put("lastBuildNumber", repo.getLastBuildNumber());
+        contentValues.put("lastBuildState", repo.getLastBuildStatus().getName());
+        contentValues.put("lastBuildDuration", repo.getLastBuildDuration());
+        contentValues.put("lastBuildFinished", repo.getLastBuildFinishedAt().getTime());
+        return contentValues;
     }
 
     @Override
@@ -81,4 +103,5 @@ public class DataBaseHelperImpl implements DataBaseHelper {
             throw e;
         }
     }
+
 }

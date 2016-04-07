@@ -3,6 +3,7 @@ package be.rubengerits.buildstatus.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -19,9 +20,10 @@ import java.util.TreeSet;
 
 import be.rubengerits.buildstatus.BuildStatusApplication;
 import be.rubengerits.buildstatus.R;
-import be.rubengerits.buildstatus.model.data.BuildStatus;
-import be.rubengerits.buildstatus.model.data.Repository;
+import be.rubengerits.buildstatus.api.global.BuildStatus;
+import be.rubengerits.buildstatus.api.global.Repository;
 import be.rubengerits.buildstatus.presenter.OverviewPresenterImpl;
+import be.rubengerits.buildstatus.utils.BuildStatusUtils;
 import be.rubengerits.buildstatus.view.repositories.RepositoriesAdapter;
 import be.rubengerits.buildstatus.view.widget.EmptyRecyclerView;
 
@@ -47,6 +49,7 @@ public class OverviewActivity extends AppCompatActivity implements OverviewView 
         buildList.setAdapter(repositoriesAdapter);
 
         updateStatus(BuildStatus.STATUS_UNKNOWN);
+
         buildList.setEmptyView(findViewById(R.id.layout_no_data));
     }
 
@@ -78,9 +81,9 @@ public class OverviewActivity extends AppCompatActivity implements OverviewView 
 
     private void updateStatus(BuildStatus status) {
         CollapsingToolbarLayout toolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
-        toolbarLayout.setBackground(ContextCompat.getDrawable(this, status.getResourceId()));
-        toolbarLayout.setContentScrimColor(ContextCompat.getColor(this, status.getColorPrimary()));
-        toolbarLayout.setStatusBarScrimColor(ContextCompat.getColor(this, status.getColorPrimaryDark()));
+        toolbarLayout.setBackground(ContextCompat.getDrawable(this, BuildStatusUtils.getBackgroundImage(status)));
+        toolbarLayout.setContentScrimColor(ContextCompat.getColor(this, BuildStatusUtils.getColor(status)));
+        toolbarLayout.setStatusBarScrimColor(ContextCompat.getColor(this, BuildStatusUtils.getColorDark(status)));
     }
 
     /**
@@ -110,6 +113,7 @@ public class OverviewActivity extends AppCompatActivity implements OverviewView 
 
     @Override
     public void showNoAccounts() {
+        stopLoading();
         updateView(BuildStatus.STATUS_LOGIN, R.id.layout_no_accounts, new TreeSet<>());
     }
 
@@ -133,7 +137,7 @@ public class OverviewActivity extends AppCompatActivity implements OverviewView 
     private BuildStatus getGeneralStatus(Set<Repository> repositories) {
         BuildStatus status = BuildStatus.STATUS_UNKNOWN;
         for (Repository repository : repositories) {
-            BuildStatus repositoryStatus = repository.getLastBuildState();
+            BuildStatus repositoryStatus = repository.getLastBuildStatus() != null ? repository.getLastBuildStatus() : BuildStatus.STATUS_UNKNOWN;
             if (repositoryStatus.getWeight() > status.getWeight()) {
                 status = repositoryStatus;
             }
@@ -141,4 +145,8 @@ public class OverviewActivity extends AppCompatActivity implements OverviewView 
         return status;
     }
 
+    public void openSettings(View view) {
+        Intent intent = new Intent(this, SettingsActivity.class);
+        ActivityCompat.startActivity(this, intent, null);
+    }
 }

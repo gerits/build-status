@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 import be.rubengerits.buildstatus.R;
-import be.rubengerits.buildstatus.model.data.Repository;
+import be.rubengerits.buildstatus.api.global.Repository;
 
 public class RepositoriesAdapter extends RecyclerView.Adapter<RepositoryViewHolder> {
 

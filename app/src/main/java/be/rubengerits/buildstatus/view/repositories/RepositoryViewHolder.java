@@ -9,11 +9,13 @@ import android.widget.TextView;
 import java.util.Date;
 
 import be.rubengerits.buildstatus.R;
-import be.rubengerits.buildstatus.model.data.BuildStatus;
-import be.rubengerits.buildstatus.model.data.Repository;
+import be.rubengerits.buildstatus.api.global.BuildStatus;
+import be.rubengerits.buildstatus.api.global.Repository;
+import be.rubengerits.buildstatus.utils.BuildStatusUtils;
 import be.rubengerits.buildstatus.utils.DateUtils;
 
 public class RepositoryViewHolder extends RecyclerView.ViewHolder {
+
     private final Context context;
     private final TextView repositoryName, buildDuration, buildFinished;
     private final View buildStatus;
@@ -34,10 +36,11 @@ public class RepositoryViewHolder extends RecyclerView.ViewHolder {
         setLastBuildDuration(repo);
         setLastBuildFinished(repo);
 
-        BuildStatus lastBuildState = repo.getLastBuildState();
-        buildStatus.setBackgroundColor(ContextCompat.getColor(context, lastBuildState.getColorPrimary()));
-        repositoryName.setCompoundDrawablesWithIntrinsicBounds(lastBuildState.getIconId() != null ? ContextCompat.getDrawable(context, lastBuildState.getIconId()) : null, null, null, null);
-        repositoryName.setTextColor(ContextCompat.getColor(context, lastBuildState.getColorPrimary()));
+        BuildStatus lastBuildState = repo.getLastBuildStatus() != null ? repo.getLastBuildStatus() : BuildStatus.STATUS_UNKNOWN;
+
+        buildStatus.setBackgroundColor(ContextCompat.getColor(context, BuildStatusUtils.getColor(lastBuildState)));
+        repositoryName.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context, BuildStatusUtils.getIcon(lastBuildState)), null, null, null);
+        repositoryName.setTextColor(ContextCompat.getColor(context, BuildStatusUtils.getColor(lastBuildState)));
     }
 
     private void setLastBuildFinished(Repository repo) {

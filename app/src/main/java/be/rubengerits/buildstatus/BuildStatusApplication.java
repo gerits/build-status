@@ -8,7 +8,7 @@ import be.rubengerits.buildstatus.model.dagger.DaggerBuildStatusComponent;
 
 public class BuildStatusApplication extends Application {
 
-    public static final String API_URL = "https://buildstatus-gerits.rhcloud.com";
+    public static final String API_URL = "https://jbosseap-gerits.rhcloud.com/";
 
     private final BuildStatusComponent buildStatusComponent = createBuildStatusComponent();
 

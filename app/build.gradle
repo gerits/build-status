@@ -4,7 +4,7 @@ apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion '23.0.2'
+    buildToolsVersion '23.0.3'
 
     defaultConfig {
         applicationId 'be.rubengerits.buildstatus'
@@ -12,6 +12,10 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName '1.0'
+        generatedDensities = []
+    }
+    aaptOptions {
+        additionalParameters "--no-version-vectors"
     }
     buildTypes {
         release {
@@ -20,30 +24,41 @@ android {
         }
     }
     compileOptions {
+        def buildStatusApiVersion = '1.0-SNAPSHOT'
+        def supportVersion = '24.0.0-alpha1'
+        def daggerVersion = '2.0.2'
+        def retrofitVersion = '2.0.0-beta4'
+
         dependencies {
             compile fileTree(dir: 'libs', include: ['*.jar'])
 
-            compile 'com.android.support:support-annotations:23.1.1'
-            compile 'com.android.support:appcompat-v7:23.1.1'
-            compile 'com.android.support:design:23.1.1'
-            compile 'com.android.support:support-v4:23.1.1'
-            compile 'com.android.support:cardview-v7:23.1.1'
+            compile('be.rubengerits.buildstatus:build-status-api:' + buildStatusApiVersion) {
+                changing = true
+            }
 
-            apt 'com.google.dagger:dagger-compiler:2.0.2'
-            compile 'com.google.dagger:dagger:2.0.2'
+            compile 'com.android.support:support-annotations:' + supportVersion
+            compile 'com.android.support:appcompat-v7:' + supportVersion
+            compile 'com.android.support:design:' + supportVersion
+            compile 'com.android.support:support-v4:' + supportVersion
+            compile 'com.android.support:cardview-v7:' + supportVersion
+
+            apt 'com.google.dagger:dagger-compiler:' + daggerVersion
+            compile 'com.google.dagger:dagger:' + daggerVersion
 
             compile 'com.squareup.sqlbrite:sqlbrite:0.5.0'
 
-            compile 'com.squareup.retrofit2:retrofit:2.0.0-beta4'
-            compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0-beta4'
-            compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
+            compile 'com.squareup.retrofit2:retrofit:' + retrofitVersion
+            compile 'com.squareup.retrofit2:adapter-rxjava:' + retrofitVersion
+            compile 'com.squareup.retrofit2:converter-gson:' + retrofitVersion
             compile 'com.squareup.okhttp3:okhttp:3.1.2'
+            compile 'com.squareup.okhttp3:logging-interceptor:3.1.2'
 
             compile 'io.reactivex:rxandroid:1.1.0'
             compile 'io.reactivex:rxjava:1.1.1'
 
             compile 'net.frakbot:jumpingbeans:1.3.0'
 
+            compile 'nl.littlerobots.rxlint:rxlint:1.0'
         }
         targetCompatibility 1.8
         sourceCompatibility 1.8

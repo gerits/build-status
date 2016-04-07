@@ -17,7 +17,6 @@ import be.rubengerits.buildstatus.BuildStatusApplication;
 import be.rubengerits.buildstatus.R;
 import be.rubengerits.buildstatus.model.data.Account;
 import be.rubengerits.buildstatus.model.data.AccountType;
-import be.rubengerits.buildstatus.presenter.SettingsPresenter;
 import be.rubengerits.buildstatus.presenter.SettingsPresenterImpl;
 import be.rubengerits.buildstatus.view.accounts.AccountAdapter;
 import be.rubengerits.buildstatus.view.widget.EmptyRecyclerView;

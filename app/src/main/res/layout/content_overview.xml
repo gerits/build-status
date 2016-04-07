@@ -45,15 +45,28 @@
 
     </LinearLayout>
 
-    <TextView
+    <LinearLayout
         android:id="@+id/layout_no_accounts"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:drawablePadding="8dp"
-        android:drawableTop="@drawable/ic_account_alert"
-        android:padding="@dimen/text_margin"
-        android:text="@string/no_account_error"
-        android:visibility="gone" />
+        android:orientation="vertical"
+        android:visibility="gone">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:drawablePadding="8dp"
+            android:drawableTop="@drawable/ic_account_alert"
+            android:padding="@dimen/text_margin"
+            android:text="@string/no_account_error" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:onClick="openSettings"
+            android:text="@string/action_add_account" />
+
+    </LinearLayout>
 </LinearLayout>

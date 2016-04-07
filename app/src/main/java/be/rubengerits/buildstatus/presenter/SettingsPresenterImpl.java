@@ -10,7 +10,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import be.rubengerits.buildstatus.model.data.AccessToken;
+import be.rubengerits.buildstatus.api.global.Authentication;
 import be.rubengerits.buildstatus.model.data.Account;
 import be.rubengerits.buildstatus.model.data.AccountType;
 import be.rubengerits.buildstatus.model.database.DataBaseHelper;
@@ -36,7 +36,7 @@ public class SettingsPresenterImpl implements SettingsPresenter {
     @Override
     public void loadAllAccounts() {
         dataBaseHelper.getAccounts()
-                .doOnError(e -> view.showError(e))
+                .doOnError(view::showError)
                 .doOnNext(this::handleAccount)
                 .subscribe();
     }
@@ -66,16 +66,16 @@ public class SettingsPresenterImpl implements SettingsPresenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .onErrorReturn(throwable -> null)
-                .doOnError(e -> view.showError(e))
-                .doOnNext(accessToken -> saveAccessToken(type, username, accessToken))
+                .doOnError(view::showError)
+                .doOnNext(authentication -> saveAccessToken(type, username, authentication))
                 .subscribe();
     }
 
-    private void saveAccessToken(AccountType type, String username, AccessToken accessToken) {
-        if (accessToken != null && accessToken.getAccessToken() != null && !"undefined".equals(accessToken.getAccessToken())) {
+    private void saveAccessToken(AccountType type, String username, Authentication authentication) {
+        if (authentication != null && authentication.getAccessToken() != null && !"undefined".equals(authentication.getAccessToken())) {
             Account account = new Account();
             account.setUsername(username);
-            account.setToken(accessToken.getAccessToken());
+            account.setToken(authentication.getAccessToken());
             account.setType(type);
             dataBaseHelper.saveAccount(account);
 

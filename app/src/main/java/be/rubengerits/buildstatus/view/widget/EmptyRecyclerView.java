@@ -35,10 +35,13 @@ public class EmptyRecyclerView extends RecyclerView {
     }
 
     public void setEmptyView(View emptyView) {
+        if (this.emptyView != null) {
+            this.emptyView.setVisibility(GONE);
+        }
         this.emptyView = emptyView;
-
         emptyObserver.onChanged();
     }
+
 
     private class EmptyDataObserver extends AdapterDataObserver {
         @Override

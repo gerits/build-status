@@ -16,7 +16,7 @@
     <string name="build_duration">Duration: %1$s</string>
     <string name="build_finished">Finished: %1$s</string>
 
-    <string name="no_account_error">You did not add any accounts yet. Please go to settings to add an accounts.</string>
+    <string name="no_account_error">You did not add any accounts yet. Please go to settings or click on the button below to add an accounts.</string>
     <string name="no_projects_found">No project found</string>
     <string name="refresh">Refresh</string>
     <string name="loading">Loading</string>

@@ -5,9 +5,9 @@ import android.util.Base64;
 
 import javax.inject.Inject;
 
-import be.rubengerits.buildstatus.model.data.AccessToken;
+import be.rubengerits.buildstatus.api.global.Authentication;
+import be.rubengerits.buildstatus.api.global.Repositories;
 import be.rubengerits.buildstatus.model.data.Account;
-import be.rubengerits.buildstatus.model.data.Repositories;
 import retrofit2.Retrofit;
 import rx.Observable;
 
@@ -20,7 +20,7 @@ public class BuildStatusServiceImpl implements BuildStatusService {
     }
 
     @Override
-    public Observable<AccessToken> authenticate(String username, String password) {
+    public Observable<Authentication> authenticate(String username, String password) {
         Retrofit retrofit = RestUtils.createRetrofit(url);
 
         RetrofitBuildStatusService service = retrofit.create(RetrofitBuildStatusService.class);
