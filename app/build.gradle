@@ -23,6 +23,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
     compileOptions {
         def buildStatusApiVersion = '1.0-SNAPSHOT'
         def supportVersion = '24.0.0-alpha1'
