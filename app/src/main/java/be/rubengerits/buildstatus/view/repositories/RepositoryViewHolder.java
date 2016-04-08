@@ -1,6 +1,8 @@
 package be.rubengerits.buildstatus.view.repositories;
 
 import android.content.Context;
+import android.graphics.drawable.Animatable;
+import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -39,7 +41,11 @@ public class RepositoryViewHolder extends RecyclerView.ViewHolder {
         BuildStatus lastBuildState = repo.getLastBuildStatus() != null ? repo.getLastBuildStatus() : BuildStatus.STATUS_UNKNOWN;
 
         buildStatus.setBackgroundColor(ContextCompat.getColor(context, BuildStatusUtils.getColor(lastBuildState)));
-        repositoryName.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context, BuildStatusUtils.getIcon(lastBuildState)), null, null, null);
+        Drawable icon = ContextCompat.getDrawable(context, BuildStatusUtils.getIcon(lastBuildState));
+        repositoryName.setCompoundDrawablesWithIntrinsicBounds(icon, null, null, null);
+        if (icon instanceof Animatable) {
+            ((Animatable) icon).start();
+        }
         repositoryName.setTextColor(ContextCompat.getColor(context, BuildStatusUtils.getColor(lastBuildState)));
     }
 

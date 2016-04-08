@@ -1,0 +1,21 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="16dp"
+    android:height="16dp"
+    android:viewportHeight="24.0"
+    android:viewportWidth="24.0">
+
+    <group
+        android:name="building_group"
+        android:pivotX="12.0"
+        android:pivotY="12.0">
+
+        <path
+            android:fillColor="@color/colorBuilding"
+            android:pathData="M 12 0.5000644 C 14.2066733793 0.5000644 15.9955356 2.28892662 15.9955356 4.4956 C 15.9955356 6.70227338 14.2066733793 8.4911356 12 8.4911356 C 9.79332662071 8.4911356 8.0044644 6.70227338 8.0044644 4.4956 C 8.0044644 2.28892662 9.79332662071 0.5000644 12 0.5000644 Z" />
+        <path
+            android:fillColor="@color/colorBuilding"
+            android:pathData="M 12 15.5089644 C 14.2066733793 15.5089644 15.9955356 17.29782662 15.9955356 19.5045 C 15.9955356 21.71117338 14.2066733793 23.5000356 12 23.5000356 C 9.79332662071 23.5000356 8.0044644 21.71117338 8.0044644 19.5045 C 8.0044644 17.29782662 9.79332662071 15.5089644 12 15.5089644 Z" />
+
+    </group>
+
+</vector>

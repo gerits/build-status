@@ -44,9 +44,9 @@ public class BuildStatusUtils {
     private static final Map<BuildStatus, Integer> icon = new HashMap<>();
 
     static {
-        icon.put(BuildStatus.STATUS_LOGIN, R.drawable.ic_status_passing);
+        icon.put(BuildStatus.STATUS_LOGIN, R.drawable.ic_status_unknown);
         icon.put(BuildStatus.STATUS_FAILING, R.drawable.ic_status_error);
-        icon.put(BuildStatus.STATUS_BUILDING, R.drawable.ic_status_passing);
+        icon.put(BuildStatus.STATUS_BUILDING, R.drawable.ic_status_building_anim);
         icon.put(BuildStatus.STATUS_PASSING, R.drawable.ic_status_passing);
         icon.put(BuildStatus.STATUS_UNKNOWN, R.drawable.ic_status_unknown);
     }
